@@ -1,0 +1,70 @@
+stages:
+ - restore
+ - build
+ - test
+ - pack
+ - upload
+
+before_script:
+  - |
+    if [[ $CI_COMMIT_TAG =~ ^v([0-9]+)\.([0-9]+)\.([0-9]+)$ ]]; then
+      export VERSION_MAJOR=${BASH_REMATCH[1]}
+      export VERSION_MINOR=${BASH_REMATCH[2]}
+      export VERSION_PATCH=${BASH_REMATCH[3]}
+      export VERSION="$VERSION_MAJOR.$VERSION_MINOR.$VERSION_PATCH"
+      echo "Running release build for v$VERSION"
+    elif [[ -n $CI_COMMIT_TAG ]]; then
+      echo "Error: The tag is set but does not follow the format v[Major].[Minor].[Patch]"
+      exit 1
+    fi
+
+restore-stage:
+  stage: restore
+  image: mcr.microsoft.com/dotnet/sdk:9.0
+  tags: [docker]
+  script:
+    - dotnet restore --packages .nuget/packages
+  cache:
+    key: ${CI_PROJECT_NAME}-nuget
+    paths: [.nuget/packages]
+  artifacts:
+    paths: [.nuget/packages]
+
+build-stage:
+  stage: build
+  image: mcr.microsoft.com/dotnet/sdk:9.0
+  tags: [docker]
+  needs: [ restore-stage ]
+  script:
+    - dotnet build -c Release
+  
+test-stage:
+  stage: test
+  image: mcr.microsoft.com/dotnet/sdk:9.0
+  tags: [docker]
+  needs: [ build-stage ]
+  script:
+    - dotnet test -c Release 
+
+pack-stage:
+  stage: pack
+  image: mcr.microsoft.com/dotnet/sdk:9.0
+  tags: [docker]
+  script:
+    - if [[ -n $VERSION ]]; then dotnet build ./FireblightStudios.Common/FireblightStudios.Common.csproj -c Release -p:Version=$VERSION; else dotnet build ./FireblightStudios.Common/FireblightStudios.Common.csproj -c Release; fi
+    - dotnet pack ./FireblightStudios.Common/FireblightStudios.Common.csproj --configuration Release --output out/packages
+  artifacts:
+    paths: [ "out/packages" ]
+    expire_in: 1 week
+
+upload-stage:
+  stage: upload
+  image: mcr.microsoft.com/dotnet/sdk:9.0
+  tags: [docker]
+  rules:
+    - if: $CI_COMMIT_TAG =~ /^v([0-9]+)\.([0-9]+)\.([0-9]+)$/
+      when: on_success
+  script:
+    - dotnet nuget push out/packages/*.nupkg --api-key $CI_JOB_TOKEN --source "$CI_API_V4_URL/projects/$CI_PROJECT_ID/packages/nuget/index.json" --skip-duplicate
+    - dotnet nuget push out/packages/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
+  
