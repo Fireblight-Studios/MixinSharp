@@ -9,7 +9,7 @@
         <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
         <IsRoslynComponent>true</IsRoslynComponent>
         <PackageId>MixinSharp.Generators</PackageId>
-        <RootNamespace>MixinUtils.Generators</RootNamespace>
+        <RootNamespace>MixinSharp.Generators</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
