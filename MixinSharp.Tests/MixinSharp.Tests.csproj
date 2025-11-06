@@ -21,6 +21,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\MixinSharp.Generators\MixinSharp.Generators.csproj" />
+        <ProjectReference Include="..\MixinSharp.Sample\MixinSharp.Sample.csproj" />
     </ItemGroup>
 
 
