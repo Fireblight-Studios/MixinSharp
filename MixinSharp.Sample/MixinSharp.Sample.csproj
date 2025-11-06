@@ -4,10 +4,13 @@
         <TargetFramework>net9.0</TargetFramework>
         <Nullable>enable</Nullable>
         <RootNamespace>MixinUtils.Sample</RootNamespace>
+        <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+        <CompilerGeneratedFilesOutputPath>$(BaseIntermediateOutputPath)\generated</CompilerGeneratedFilesOutputPath>
     </PropertyGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\MixinSharp.Generators\MixinSharp.Generators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+        <ProjectReference Include="..\MixinSharp\MixinSharp.csproj" />
     </ItemGroup>
 
     <ItemGroup>
