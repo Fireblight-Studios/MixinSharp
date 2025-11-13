@@ -44,6 +44,7 @@ test-stage:
   tags: [docker]
   needs: [ build-stage ]
   script:
+    - dotnet build -c Release
     - dotnet test -c Release 
 
 pack-stage:
