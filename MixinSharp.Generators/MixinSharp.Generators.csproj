@@ -22,7 +22,14 @@
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.3.0"/>
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.3.0"/>
     </ItemGroup>
-
+    <ItemGroup>
+        <None Include="$(NuGetPackageRoot)fireblightstudios.common\0.1.0\lib\netstandard2.0\FireblightStudios.Common.dll"
+              Pack="true"
+              PackagePath="analyzers/dotnet/cs" />
+    </ItemGroup>
+    <ItemGroup>
+        <Analyzer Include="$(NuGetPackageRoot)fireblightstudios.common\0.1.0\lib\netstandard2.0\FireblightStudios.Common.dll" />
+    </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\MixinSharp\MixinSharp.csproj" />
     </ItemGroup>
