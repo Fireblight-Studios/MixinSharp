@@ -52,8 +52,9 @@ pack-stage:
   image: mcr.microsoft.com/dotnet/sdk:9.0
   tags: [docker]
   script:
-    - if [[ -n $VERSION ]]; then dotnet build ./FireblightStudios.Common/FireblightStudios.Common.csproj -c Release -p:Version=$VERSION; else dotnet build ./FireblightStudios.Common/FireblightStudios.Common.csproj -c Release; fi
-    - dotnet pack ./FireblightStudios.Common/FireblightStudios.Common.csproj --configuration Release --output out/packages
+    - if [[ -n $VERSION ]]; then dotnet build -c Release -p:Version=$VERSION; else dotnet build -c Release; fi
+    - dotnet pack ./MixinSharp/MixinSharp.csproj --configuration Release --output out/packages
+    - dotnet pack ./MixinSharp.Generators/MixinSharp.Generators.csproj --configuration Release --output out/packages
   artifacts:
     paths: [ "out/packages" ]
     expire_in: 1 week

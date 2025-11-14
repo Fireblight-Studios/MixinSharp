@@ -11,6 +11,12 @@
         <PackageId>MixinSharp.Generators</PackageId>
         <RootNamespace>MixinSharp.Generators</RootNamespace>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Authors>Fireblight Studios</Authors>
+        <VersionMajor>0</VersionMajor>
+        <VersionMinor>1</VersionMinor>
+        <VersionPatch>0</VersionPatch>
+        <Version>$(VersionMajor).$(VersionMinor).$(VersionPatch)</Version>
+        
     </PropertyGroup>
 
     <ItemGroup>

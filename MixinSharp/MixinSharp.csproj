@@ -5,6 +5,13 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <TargetFrameworks>net9.0;net6.0;net8.0;netstandard2.0</TargetFrameworks>
+        <Authors>Fireblight Studios</Authors>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <VersionMajor>0</VersionMajor>
+        <VersionMinor>1</VersionMinor>
+        <VersionPatch>0</VersionPatch>
+        <Version>$(VersionMajor).$(VersionMinor).$(VersionPatch)</Version>
+        
     </PropertyGroup>
 
 </Project>
